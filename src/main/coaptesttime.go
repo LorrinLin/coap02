@@ -6,11 +6,13 @@ import (
 	"os"
 	"log"
 	"time"
+	"sync"
 )
 
 var(
 	i int
-	t = 10
+	t = 100
+	wg sync.WaitGroup
 )
 
 // This is a coap client used to send request messages to server and then receive response messages,
@@ -25,7 +27,18 @@ func main(){
 	}
 	
 	for i=0; i<t; i++{
+		wg.Add(1)
+		go sendRequestMesage(c, i)
+	}
+	wg.Wait()
+	duration := time.Since(start)
+	log.Println("----- 1 client send 100 message cost time :",duration)
+	log.Println("----- average duration time :",duration/100)
 	
+}
+
+func sendRequestMesage(c *coap.Conn,i int){
+
 		req := coap.Message{
 			Type:		coap.Confirmable,
 			Code:		coap.GET,
@@ -46,14 +59,10 @@ func main(){
 				}
 				payload := string(rv.Payload)
 				log.Println("Got response message payload:",payload,i)
+				wg.Done()
 			}
 			rv, err = c.Receive()
 		}
 		//log.Println("------",i)
-	}
-	
-	duration := time.Since(start)
-	log.Println("duration time :",duration)
-	log.Println("average duration time :",duration/10)
-	log.Println("------done------")
+		
 }
