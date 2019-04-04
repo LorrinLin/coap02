@@ -15,8 +15,8 @@ var(
 	wg sync.WaitGroup
 )
 
-// This is a coap client used to send request messages to server and then receive response messages,
-//what is more, it will calcuate the time duration it used
+// This is a coap client used to send 100 request messages to server and then receive response messages,
+// what is more, it will calcuate the time duration it used
 // PS: it must use server.go in coap-go-first as a server 
 func main(){
 	

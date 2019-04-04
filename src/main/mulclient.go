@@ -12,6 +12,9 @@ import (
 var(
 	wg sync.WaitGroup
 )
+
+// create 100 clients, and send a message to the server, get the response back
+// calculate the cost time
 func main(){
 	start := time.Now()
 	
