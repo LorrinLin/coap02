@@ -33,7 +33,7 @@ func main(){
 			Payload:	[]byte(strconv.Itoa(i)),
 		}
 	
-		path := "my/path"
+		path := "my/test"
 		if len(os.Args) >1 {
 			path = os.Args[1]
 		}
@@ -50,7 +50,6 @@ func main(){
 			rv, err = c.Receive()
 		}
 		//log.Println("------",i)
-	
 	}
 	
 	duration := time.Since(start)
