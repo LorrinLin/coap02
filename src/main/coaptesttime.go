@@ -11,7 +11,7 @@ import (
 
 var(
 	i int
-	t = 100
+	t = 1000
 	wg sync.WaitGroup
 )
 
@@ -20,20 +20,22 @@ var(
 // PS: it must use server.go in coap-go-first as a server 
 func main(){
 	
-	start := time.Now()
-	c, err := coap.Dial("udp", "localhost:5683")
+//	start := time.Now()
+	// 142.93.161.16 is my own remote server,
+	// which is running as a coap server in port NO:5683 
+	c, err := coap.Dial("udp", "142.93.161.16:5683")
 	if err!= nil{
 		log.Println("err in dial..",err)
 	}
-	
+	start := time.Now()
 	for i=0; i<t; i++{
 		wg.Add(1)
 		go sendRequestMesage(c, i)
 	}
 	wg.Wait()
 	duration := time.Since(start)
-	log.Println("----- 1 client send 100 message cost time :",duration)
-	log.Println("----- average duration time :",duration/100)
+	log.Println("----- 1 client send 1000 message cost time :",duration)
+	log.Println("----- average duration time :",duration/1000)
 	
 }
 
